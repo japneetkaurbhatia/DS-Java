@@ -33,7 +33,7 @@ public class Main {
             }
         }
         if(sr + 1 <= dr && sc + 1 <= dc){
-            ArrayList<String> diagonal = getMazePathDiagonal(sr +1,sc,dr,dc);
+            ArrayList<String> diagonal = getMazePathDiagonal(sr +1,sc + 1,dr,dc);
             for(String s : diagonal){
                 myAns.add("d" + s);
             }
