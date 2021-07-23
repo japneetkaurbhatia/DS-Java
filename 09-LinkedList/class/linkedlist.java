@@ -3,7 +3,8 @@ public class client{
         linkedlist ll = new linkedlist();
         System.out.println();
     }
-}public class linkedlist {
+}
+public class linkedlist {
 
     private class Node {
         int data = 0;
