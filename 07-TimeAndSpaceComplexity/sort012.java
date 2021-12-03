@@ -24,6 +24,213 @@ public class Main {
     arr[i] = arr[j];
     arr[j] = temp;
   }
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/*
+ * 
+ */
+public class Solution
+{
+	public static int  nonRepeatedChar(String compString)
+	{
+		int  answer = 0;
+		// Write your code here
+		if(compString.length() == 0)
+			return answer;
+		if(compString.length() == 1) {
+			answer++;
+			return answer;
+		}
+		int[] freqLower = new int[26]; 
+		int[] freqUpper = new int[26];
+		int[] freqNumeric = new int[10];
+		int[] freqSpecial = new int[26];
+		for(int i = 0; i < compString.length(); i++) {
+			if(compString.charAt(i) >= 'a' && compString.charAt(i) <= 'z')
+				freqLower[compString.charAt(i) - 'a']++;
+			else if(compString.charAt(i) >= 'A' && compString.charAt(i) <= 'Z')
+				freqUpper[compString.charAt(i) - 'A']++;
+			else if(compString.charAt(i) >= '0' && compString.charAt(i) <= '9')
+				freqNumeric[compString.charAt(i) - '0']++;
+			else 
+				freqSpecial[compString.charAt(i) - '@']++;
+		}
+		
+		for(int j = 0; j < freqLower.length; j++) {
+			if(freqLower[j] == 1) 
+				answer++;
+		}
+		
+		for(int k = 0; k < freqUpper.length; k++) {
+			if(freqUpper[k] == 1) 
+				answer++;
+		}
+		
+		for(int l = 0; l < freqNumeric.length; l++) {
+			if(freqNumeric[l] == 1) 
+				answer++;
+		}
+		
+		for(int m = 0; m < freqSpecial.length; m++) {
+			if(freqSpecial[m] == 1) 
+				answer++;
+		}
+		
+		return answer;
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner in = new Scanner(System.in);
+		
+		// input for compString
+		String compString = in.nextLine();
+		
+		int result = nonRepeatedChar(compString);
+		System.out.print(result);
+		
+	}
+}
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/*
+ * 
+ */
+public class Solution
+{
+	public static int  nonRepeatedChar(String compString)
+	{
+		int  answer = 0;
+		// Write your code here
+		if(compString.length() == 0)
+			return answer;
+		if(compString.length() == 1) {
+			answer++;
+			return answer;
+		}
+		int[] freqLower = new int[26]; 
+		int[] freqUpper = new int[26];
+		int[] freqNumeric = new int[10];
+		int[] freqSpecial = new int[26];
+		for(int i = 0; i < compString.length(); i++) {
+			if(compString.charAt(i) >= 'a' && compString.charAt(i) <= 'z')
+				freqLower[compString.charAt(i) - 'a']++;
+			else if(compString.charAt(i) >= 'A' && compString.charAt(i) <= 'Z')
+				freqUpper[compString.charAt(i) - 'A']++;
+			else if(compString.charAt(i) >= '0' && compString.charAt(i) <= '9')
+				freqNumeric[compString.charAt(i) - '0']++;
+			else 
+				freqSpecial[compString.charAt(i) - '@']++;
+		}
+		
+		for(int j = 0; j < freqLower.length; j++) {
+			if(freqLower[j] == 1) 
+				answer++;
+		}
+		
+		for(int k = 0; k < freqUpper.length; k++) {
+			if(freqUpper[k] == 1) 
+				answer++;
+		}
+		
+		for(int l = 0; l < freqNumeric.length; l++) {
+			if(freqNumeric[l] == 1) 
+				answer++;
+		}
+		
+		for(int m = 0; m < freqSpecial.length; m++) {
+			if(freqSpecial[m] == 1) 
+				answer++;
+		}
+		
+		return answer;
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner in = new Scanner(System.in);
+		
+		// input for compString
+		String compString = in.nextLine();
+		
+		int result = nonRepeatedChar(compString);
+		System.out.print(result);
+		
+	}
+}
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/*
+ * 
+ */
+public class Solution
+{
+	public static int  nonRepeatedChar(String compString)
+	{
+		int  answer = 0;
+		// Write your code here
+		if(compString.length() == 0)
+			return answer;
+		if(compString.length() == 1) {
+			answer++;
+			return answer;
+		}
+		int[] freqLower = new int[26]; 
+		int[] freqUpper = new int[26];
+		int[] freqNumeric = new int[10];
+		int[] freqSpecial = new int[26];
+		for(int i = 0; i < compString.length(); i++) {
+			if(compString.charAt(i) >= 'a' && compString.charAt(i) <= 'z')
+				freqLower[compString.charAt(i) - 'a']++;
+			else if(compString.charAt(i) >= 'A' && compString.charAt(i) <= 'Z')
+				freqUpper[compString.charAt(i) - 'A']++;
+			else if(compString.charAt(i) >= '0' && compString.charAt(i) <= '9')
+				freqNumeric[compString.charAt(i) - '0']++;
+			else 
+				freqSpecial[compString.charAt(i) - '@']++;
+		}
+		
+		for(int j = 0; j < freqLower.length; j++) {
+			if(freqLower[j] == 1) 
+				answer++;
+		}
+		
+		for(int k = 0; k < freqUpper.length; k++) {
+			if(freqUpper[k] == 1) 
+				answer++;
+		}
+		
+		for(int l = 0; l < freqNumeric.length; l++) {
+			if(freqNumeric[l] == 1) 
+				answer++;
+		}
+		
+		for(int m = 0; m < freqSpecial.length; m++) {
+			if(freqSpecial[m] == 1) 
+				answer++;
+		}
+		
+		return answer;
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner in = new Scanner(System.in);
+		
+		// input for compString
+		String compString = in.nextLine();
+		
+		int result = nonRepeatedChar(compString);
+		System.out.print(result);
+		
+	}
+}
 
   public static void print(int[] arr){
     for(int i = 0 ; i < arr.length; i++){
