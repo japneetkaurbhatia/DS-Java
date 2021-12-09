@@ -277,6 +277,65 @@ public class l001 {
         return res;
     }
 
+    //BFS
+    public static void bfs(int src, boolean[] vis) {
+        int level = 0;
+        int cycleCount = 0;
+
+        LinkedList<Integer> que = new LinkedList<>();
+        que.addLast(src);
+        while(que.size() != 0) {
+            int size = que.size();
+            System.out.print(level + "->");
+            while(size -- > 0) {
+                int rvtx = que.removeFirst();
+                if(vis[rvtx]) {
+                    cycleCount++;
+                    continue;
+                }
+                System.out.print(rvtx + " ");
+                vis[rvtx] = true;
+                for(Edge e: graph[rvtx])  {
+                    if(!vis[e.v])
+                        que.addLast(e.v);
+                }
+            }
+            System.out.println();
+            level++;
+        } 
+    }
+
+    public static void bfs_02(int src, boolean[] vis) {
+        int level = 0;
+        int cycleCount = 0;
+
+        LinkedList<Integer> que = new LinkedList<>();
+        que.addLast(src);
+        vis[src] = true; // *
+        while(que.size() != 0) {
+            int size = que.size();
+            System.out.print(level + "->");
+            while(size -- > 0) {
+                int rvtx = que.removeFirst();
+                // if(vis[rvtx]) {
+                //     cycleCount++;
+                //     continue;
+                // }
+                System.out.print(rvtx + " ");
+                vis[rvtx] = true;
+                for(Edge e: graph[rvtx])  {
+                    if(!vis[e.v])
+                        que.addLast(e.v);
+                        vis[e.v] = true;  // *
+                }
+            }
+            System.out.println();
+            level++;
+        } 
+    }
+
+
+
     public static void main(String[] args) {
         //list represntation , harr index k correspond arraylist bnegi
         for(int i = 0; i < N; i++) 
