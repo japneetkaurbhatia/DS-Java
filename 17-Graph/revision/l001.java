@@ -78,23 +78,203 @@ public class l001 {
 
     public static int allPath(int src, int dest, boolean[] vis, String ans) {
         if(src == dest){
-            System.out.println(ans)
+            System.out.println(ans + dest);
             return 1;
         } 
         int count = 0;
         vis[src] = true;
         for(Edge e : graph[src]) {
             if(!vis(e.v))
-                count += res || allPath(e.v, dest, ans+src);
+                count += allPath(e.v, dest, ans+src);
         }
         vis[src] = true;
         return count;
     }
 
-    public static void printPreOrder(int src, boolean[] vis) {
+    public static void printPreOrder(int src, int wsf, String asf, boolean[] vis) {
+        System.out.println(src + "-> " + asf + "@ " + wsf);
+        vis[src] = true;
+        for(Edge e : graph[src]) {
+            if(!vis[e.v]) {
+                printPreOrder(e.v, wsf + e.w, asf+src, vis);
+            }
+        }
+        vis[src] = false;
+        return;
     }
 
     public static void printPostOrder(int src, boolean[] vis) {
+        vis[src] = true;
+        for(Edge e : graph[src]) {
+            if(!vis[e.v]) {
+                printPostOrder(e.v, wsf + e.w, asf+src, vis);
+            }
+        }
+        System.out.println(src + "-> " + asf + "@ " + wsf);
+        vis[src] = false;
+        return;
+    }
+
+    public static class pair {
+        int largestWeight = -(int)1e9;
+        String largestPath = "";
+        int smallestWeight = (int)1e9;
+        String smallestPath = "";
+
+        int ceil = (int)1e9;
+        int floor = -(int)1e9;
+    }
+
+    public static class pqPair {
+        int wsf = 0;
+        String psf = "";
+
+        pqPair(int wsf, String psf) {
+            this.wsf = wsf;
+            this.psf = psf;
+        }
+    }
+
+    public static PriorityQueue<pqPair> pq = new PriorityQueue<>((a,b) => {
+        return a.wsf - b.wsf;
+    });
+
+    public static void allSolution(int src, int dest, boolean[] vis, pair p, String psf, int wsf, int givenWeight, int k)
+    {
+        if(src == dest) {
+            if(wsf > p.largestWeight) {
+                p.largestWeight =  wsf;
+                p.largestPath = psf + dest;
+            }
+            if(wsf < p.smallestWeight) {
+                p.smallestWeight =  wsf;
+                p.smallestPath = psf + dest;
+            }
+
+            if(wsf < givenWeight)
+                p.floor = Math.max(p.floor, wsf);
+            if(wsf > givenWeight)
+                p.ceil = Math.min(p.ceil, wsf);
+
+            pq.add(new pqPair(wsf, psf + dest));
+            if(pq.size() > k) pq.remove();
+
+            return;
+        }
+        vis[src] = true;
+        for(Edge e : graph[src]) {
+            if(!vis[e.v])
+                allSolution(e.v, dest, vis, p, asf + src , wsf + e.w, givenWeight, k);
+        }
+        vis[src] = false;
+    }
+
+    public static void dfs(int src, boolean[] vis) {
+        vis[src] = true;
+        for(Edge e : graph[src]) 
+            if(!vis[e.v])
+                dfs(e.v, vis);
+    }
+
+    public static void gcc() {
+        boolean[] vis = new boolean[N];
+        int cmpt = 0;
+        for(int i = 0; i < N; i++) {
+            if(!vis[i]) {
+                cmpt++;
+                dfs(i, vis);
+            }
+        }
+    }
+
+    // O(nm)
+    public static void  dfs_island(int[][] mat, int[][] dir, int i, int j) {
+        mat[i][j] = 0;
+        for(int d = 0; d < 4; d++) {
+            int r = i + dir[d][0];
+            int c = j + dir[d][1];
+
+            if(r >= 0 && c >= 0 && r < mat.length && c < mat[0].length && mat[r][c] == 1)
+                dfs_island(mat, dir, r, c);
+        }
+    }
+
+    public static int numberIsland(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        int[][] dir = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+        int count = 0;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(mat[i][j] == 1) {
+                    dfs_island(mat, dir, i , j);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static void hamintonian_dfs(int src, int osrc, boolean[] vis, int noe, String psf) {
+        if(noe == N - 1) {
+            System.out.print(psf + src);
+            int idx = findEdge(src, osrc);
+            if(idx != -1)
+                System.out.print("*");
+            System.out.println();
+            return;
+        }
+        vis[src] = true;
+        for(Edge e : graph[src]) {
+            if(!vis[e.v])
+                hamintonian_dfs(e.v, osrc, vis, nor+1, psf + src);
+        }
+        vis[src] = false;
+    }
+
+    public static void hamintonianPath() {
+        hamintonian_dfs(0, 0, vis, 0, "");
+    }
+
+    public static int moonDFS(ArrayList<Integer>[] graph, int src, boolean[] vis) {
+        vis[src] = true;
+        int size = 0;
+        for(Integer e : graph[src]) {
+            size += moonDFS(graph, e, vis);
+        }
+        return size + 1;
+    }
+
+    // jouney to moon or perfect frd
+    public static long JourneyToMoon(int n , int[][] astronaut) {
+        ArrayList<Integer>[] graph = new ArrayList[n];
+        for(int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        //graph creation
+        for(int[] a : astronaut) {
+            graph[a[0]].add(a[1]);
+            graph[a[1]].add(a[0]);
+        }
+
+        // size of each component
+        ArrayList<Integer> sizeArray = new ArrayList<>();
+        boolean[] vis = new boolean[n];
+        for(int i = 0; i < n; i++) {
+            if(!vis[i])
+                sizeArray.add(moonDFS(graph, i, vis));
+        }
+
+        // pairs
+        long ssf = 0, res = 0;
+        for(int ele : sizeArray) {
+            res += ele * ssf;
+            ssf += ele;
+        }
+        return res;
     }
 
     public static void main(String[] args) {
@@ -109,6 +289,8 @@ public class l001 {
         addEdge(4, 5, 10);
         addEdge(4, 6, 10);
         addEdge(5, 6, 10);
-        display();
+        // display();
+        boolean[] vis = new boolean[N];
+        printPreOrder(0, vis);
     }
 }
