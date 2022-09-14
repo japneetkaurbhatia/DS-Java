@@ -87,7 +87,7 @@ public class l001 {
             if(!vis(e.v))
                 count += allPath(e.v, dest, ans+src);
         }
-        vis[src] = true;
+        vis[src] = false;
         return count;
     }
 
